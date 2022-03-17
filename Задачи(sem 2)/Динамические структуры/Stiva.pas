@@ -37,7 +37,7 @@ begin
      readln(x^.info.data.luna);
      writeln('Introduceti anul nasterii studentului: ');
      readln(x^.info.data.an);
-     x^.next:= stiva;n
+     x^.next:= stiva;
      stiva:= x;
      writeln('Doriti sa adaugauti un student, daca DA, apasati litera D: ');
      readln(raspuns);
@@ -55,6 +55,23 @@ begin
     i:= i + 1;
     x:= x^.next;
    end;
+   x:=stiva;
+   i:= 0;
+   while((x<>Nil) and (i < 5)) do begin
+    stiva:= stiva^.next;
+    dispose(x);
+    x:= stiva;
+   end;
+   writeln;   
+   writeln('Informatia despre studenti care au ramas: ');
+   while(x<>Nil) do begin
+    writeln('Nume si prenume: ', x^.info.nume, ' ', x^.info.prenume);
+    writeln('Nota: ', x^.info.nota);
+    writeln('Data nasterii: ', x^.info.data.zi, ' ', x^.info.data.luna, ' ', x^.info.data.an);
+    writeln;
+    x:= x^.next;
+   end;
+   
   
   
 end.
