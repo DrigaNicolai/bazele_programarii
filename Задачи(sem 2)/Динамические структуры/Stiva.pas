@@ -57,13 +57,15 @@ begin
    end;
    x:=stiva;
    i:= 0;
-   while((x<>Nil) and (i < 5)) do begin
+   while((x<>Nil) and (i < 1)) do begin
     stiva:= stiva^.next;
     dispose(x);
     x:= stiva;
+    i:= i + 1;
    end;
    writeln;   
    writeln('Informatia despre studenti care au ramas: ');
+   x:=stiva;
    while(x<>Nil) do begin
     writeln('Nume si prenume: ', x^.info.nume, ' ', x^.info.prenume);
     writeln('Nota: ', x^.info.nota);
