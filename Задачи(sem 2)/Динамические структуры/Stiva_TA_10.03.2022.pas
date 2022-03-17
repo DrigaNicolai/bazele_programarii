@@ -1,4 +1,4 @@
-﻿Program StivaTA;
+Program StivaTA;
 Type
   Element = ^Nod;
   Nod = Record
@@ -14,13 +14,15 @@ Begin
   produs:= 1;
   stiva:= Nil;
   writeln('Introduceti numere: ');
-  Repeat
-    readln(num);
-    New(temp);
-    if (num <> 0) then temp^.val:= num;
-    temp^.link:= stiva;
-    stiva:= temp;
-  Until (num = 0);
+  readln(num);
+  while (num <> 0) do
+   begin
+     New(temp);
+     temp^.val:= num;
+     temp^.link:= stiva;
+     stiva:= temp;
+     readln(num);
+    end;
   write('Stiva = ');
   temp:= stiva;
   while(temp <> Nil) do begin
