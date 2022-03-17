@@ -49,7 +49,7 @@ begin
      readln(x^.info.data.an);
      x^.next:= Nil;
      if prim = Nil then
-       prim:= x;
+       prim:= x
      else
        ultim^.next:= x;
      ultim:= x;
