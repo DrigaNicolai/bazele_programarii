@@ -30,9 +30,10 @@ type
   end;
 var
   x: Angajat;
-  sant1, sant2: Element;
+  sant1, sant2, aux: Element;
   raspuns: char;
   key: 1..4;
+  numeCaut: string;
   
 Procedure AdaugInc(x: Angajat; var sant1: Element);
 var y: Element;
@@ -75,10 +76,11 @@ begin
     temp:= parc;
     parc:= parc^.next;
   end;
-  x^.pred:= temp^.pred;
-  x^.next:= temp;
-  temp^.pred^.next:= x;
-  temp^.pred:= x;
+  parc^.pred:= temp^.pred;
+  parc^.next:= temp;
+  parc^.info:= x;
+  temp^.pred^.next:= parc;
+  temp^.pred:= parc;
 end;
 Procedure AdaugDup(x: Angajat; var sant1: Element; var sant2: Element);
 var 
@@ -95,10 +97,17 @@ begin
     temp:= parc;
     parc:= parc^.next;
   end;
-  x^.pred:= temp;
-  x^.next:= temp^.next;
-  temp^.next^.pred:= x;
-  temp^.next:= x;
+  parc^.pred:= temp;
+  parc^.next:= temp^.next;
+  parc^.info:= x;
+  temp^.next^.pred:= parc;
+  temp^.next:= parc;
+end;
+Procedure Stergerea(var sant1: Element, nume: string);
+var
+
+begin
+
 end;
 begin
   new(sant1);
@@ -112,21 +121,21 @@ begin
   while((raspuns = 'd') or (raspuns = 'D')) do begin
     //new(x);
     writeln('Introduceti numele angjatului: ');
-    readln(x.info.nume);
+    readln(x.nume);
     writeln('Introduceti ziua nasterii angjatului: ');
-    readln(x.info.data.zi);
+    readln(x.data.zi);
     writeln('Introduceti luna nasterii angjatului: ');
-    readln(x.info.data.luna);
+    readln(x.data.luna);
     writeln('Introduceti anul nasterii angjatului: ');
-    readln(x.info.data.an);
+    readln(x.data.an);
     writeln('Introduceti domiciliul angjatului: ');
-    readln(x.info.domiciliu);
+    readln(x.domiciliu);
     writeln('Introduceti stagiul angjatului: ');
-    readln(x.info.stagiul);
+    readln(x.stagiul);
     writeln('Introduceti rolul angjatului: ');
-    readln(x.info.rol);
+    readln(x.rol);
     writeln('Introduceti salariul angjatului: ');
-    readln(x.info.salariu);
+    readln(x.salariu);
     writeln('Unde doriti sa adaugati: ');
     writeln('1. Inceput');
     writeln('2. Capat');
@@ -137,10 +146,13 @@ begin
     else
       if (key = 2) then AdaugCap(x, sant2)
       else
-       if (key = 3) then AdaugIna(x)
-       else AdaugDup(x);
+       if (key = 3) then AdaugIna(x, sant1, sant2)
+       else AdaugDup(x, sant1, sant2);
        
     writeln('Doriti sa adaugauti un student, daca DA, apasati litera D: ');
     readln(raspuns);
    end;
+   writeln('Introduceti numele studentului: ');
+   readln(numeCaut);
+   Stergerea(sant1, numeCaut);
 end.  
