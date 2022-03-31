@@ -30,7 +30,7 @@ type
   end;
 var
   x: Angajat;
-  sant1, sant2, aux: Element;
+  sant1, sant2: Element;
   raspuns: char;
   key: 1..4;
   numeCaut: string;
@@ -65,7 +65,6 @@ Procedure AdaugIna(x: Angajat; var sant1: Element; var sant2: Element);
 var 
   poz, tempPoz: byte;
   temp, parc: Element;
-  y: Element;
 begin
   writeln('Introduceti pozitia: ');
   readln(poz);
@@ -86,7 +85,6 @@ Procedure AdaugDup(x: Angajat; var sant1: Element; var sant2: Element);
 var 
   poz, tempPoz: byte;
   temp, parc: Element;
-  y: Element;
 begin
   writeln('Introduceti pozitia: ');
   readln(poz);
@@ -103,11 +101,46 @@ begin
   temp^.next^.pred:= parc;
   temp^.next:= parc;
 end;
-Procedure Stergerea(var sant1: Element, nume: string);
+Procedure Stergerea(var sant1: Element; var sant2: Element; nume: string);
 var
-
+  parc: Element; 
 begin
-
+  parc:= sant1^.next;
+  while((parc <> sant2) and (nume <> parc^.info.nume)) do begin
+    parc:= parc^.next;
+  end;
+  if (parc^.next <> Nil) then begin
+    parc^.pred^.next:= parc^.next;
+    parc^.next^.pred:= parc^.pred;
+    dispose(parc);
+  end;
+end;
+Function CheckStagiul(sant1, sant2: Element): Boolean;
+var
+  parc: Element;
+begin
+  parc:= sant1^.next;
+  while (parc <> sant2) do begin
+    if(parc^.info.stagiul >= 20) then begin
+      CheckStagiul:= True;
+      break;
+    end;
+  end;
+end;
+Function Media (sant1: Element; sant2: Element): real;
+var
+ s, n: integer;
+ parc: Element;
+begin
+  s:= 0;
+  n:= 0;
+  parc:= sant1^.next;
+  while(parc <> sant2) do begin
+    s:= s + parc^.info.salariu;
+    n:= n + 1;
+    parc:= parc^.next;
+  end;
+  Media:= s / n;
 end;
 begin
   new(sant1);
@@ -116,7 +149,7 @@ begin
   sant1^.pred:= Nil;
   sant1^.next:= Nil;
   sant2^.pred:= sant1;
-  writeln('Doriti sa adaugauti un student, daca DA, apasati litera D: ');
+  writeln('Doriti sa adaugauti un angajat, daca DA, apasati litera D: ');
   readln(raspuns);
   while((raspuns = 'd') or (raspuns = 'D')) do begin
     //new(x);
@@ -149,10 +182,16 @@ begin
        if (key = 3) then AdaugIna(x, sant1, sant2)
        else AdaugDup(x, sant1, sant2);
        
-    writeln('Doriti sa adaugauti un student, daca DA, apasati litera D: ');
+    writeln('Doriti sa adaugauti un angajat, daca DA, apasati litera D: ');
     readln(raspuns);
    end;
-   writeln('Introduceti numele studentului: ');
+   //2
+   writeln('Introduceti numele angajatorului: ');
    readln(numeCaut);
-   Stergerea(sant1, numeCaut);
+   Stergerea(sant1, sant2, numeCaut);
+   //3
+   if(CheckStagiul(sant1, sant2)) then writeln('Sunt asa angajati')
+   else writeln('Nu sunt asa angajati');
+   //4
+   writeln('Salariu  mediu este egal: ', Media(sant1, sant2));
 end.  
