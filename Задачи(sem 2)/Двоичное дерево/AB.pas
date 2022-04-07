@@ -35,11 +35,12 @@ begin
     else NumNegative:= NumNegative(Arb^.ASt) + NumNegative(Arb^.ADr)
   end;
 end;
-Function Check(Arb: Ab; val: integer): boolean;
+Function Check(Arb: Ab; val: real): boolean;
 begin
   if Arb = Nil then Check:= false
   else begin
-  
+    if Arb^.inf = val then Check:= true
+    else Check:= Check(Arb^.ASt, val) or Check(Arb^.ADr, val);
   end;
 end; 
 var
@@ -52,6 +53,6 @@ begin
   writeln('Introduceti valoare pe care-o cautati: ');
   readln(val);
   if (Check(ArboreBin, val)) then writeln('Elementul ', val, ' apartine arborelui binar')
-  else writeln('Elementul ', val, ' nu apartine arborelui binar')
+  else writeln('Elementul ', val, ' nu apartine arborelui binar');
   
 end.
