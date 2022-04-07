@@ -42,7 +42,15 @@ begin
     if Arb^.inf = val then Check:= true
     else Check:= Check(Arb^.ASt, val) or Check(Arb^.ADr, val);
   end;
-end; 
+end;
+Function Minim(Arb: Ab): real;
+begin
+  if Arb = Nil then Minim:= Minim;
+  else begin
+    if Arb^.inf < 0 then Minim:= 1 + NumNegative(Arb^.ASt) + NumNegative(Arb^.ADr)
+    else Minim:= NumNegative(Arb^.ASt) + NumNegative(Arb^.ADr)
+  end;
+end;
 var
   ArboreBin: Ab;
   val: real;
@@ -54,5 +62,5 @@ begin
   readln(val);
   if (Check(ArboreBin, val)) then writeln('Elementul ', val, ' apartine arborelui binar')
   else writeln('Elementul ', val, ' nu apartine arborelui binar');
-  
+  writeln('Valoare minima: ');
 end.
