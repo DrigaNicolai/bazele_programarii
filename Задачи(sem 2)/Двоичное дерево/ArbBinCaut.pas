@@ -1,8 +1,8 @@
-{
-1. Создать двоичное дерево поиска из действительных значений, введенных с клаивиатуры,до ввода нуля
-2. Проверить,если значение,введенное с клавиатуры принадлежит двоичному дереву
-3. Найти максиальное и минимальное значение
-4. Найти кол-во терминальных узлов в дереве
+п»ї{
+1. РЎРѕР·РґР°С‚СЊ РґРІРѕРёС‡РЅРѕРµ РґРµСЂРµРІРѕ РїРѕРёСЃРєР° РёР· РґРµР№СЃС‚РІРёС‚РµР»СЊРЅС‹С… Р·РЅР°С‡РµРЅРёР№, РІРІРµРґРµРЅРЅС‹С… СЃ РєР»Р°РёРІРёР°С‚СѓСЂС‹,РґРѕ РІРІРѕРґР° РЅСѓР»СЏ
+2. РџСЂРѕРІРµСЂРёС‚СЊ,РµСЃР»Рё Р·РЅР°С‡РµРЅРёРµ,РІРІРµРґРµРЅРЅРѕРµ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹ РїСЂРёРЅР°РґР»РµР¶РёС‚ РґРІРѕРёС‡РЅРѕРјСѓ РґРµСЂРµРІСѓ
+3. РќР°Р№С‚Рё РјР°РєСЃРёР°Р»СЊРЅРѕРµ Рё РјРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
+4. РќР°Р№С‚Рё РєРѕР»-РІРѕ С‚РµСЂРјРёРЅР°Р»СЊРЅС‹С… СѓР·Р»РѕРІ РІ РґРµСЂРµРІРµ
 }
 Program ArbBinCaut;
 type
@@ -45,15 +45,23 @@ begin
     else
       Cautare:= Cautare(arb^.ASt, n) or Cautare(arb^.ADr, n);
 end;
-Function Minim(arb: Tree):real;
+Function Minim(arb: Tree): real;
 begin
   if arb^.ASt = Nil then Minim:= arb^.inf
   else Minim:= Minim(arb^.ASt);
 end;
-Function Maxim(arb: Tree):real;
+Function Maxim(arb: Tree): real;
 begin
   if arb^.ADr = Nil then Maxim:= arb^.inf
   else Maxim:= Maxim(arb^.ADr);
+end;
+Function Terminal(arb: Tree): integer;
+begin
+  if arb = Nil then Terminal:= 0
+  else begin
+    if (arb^.ASt = Nil) and (arb^.ADr = Nil) then Terminal:= 1
+    else Terminal:= Terminal(arb^.ASt) + Terminal(arb^.ADr);
+  end;
 end;
 begin
   arb:= Nil;
@@ -71,4 +79,5 @@ begin
   else writeln('Numarul dat nu este in arbore');
   writeln('Valoarea minima: ', Minim(arb));
   writeln('Valoarea maxima: ', Maxim(arb));
+  writeln('Arbore are ', Terminal(arb), ' noduri terminali');
 end.
