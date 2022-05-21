@@ -102,8 +102,8 @@ begin
       Cautare:= arb;
     end
     else
-      if x < arb^.inf.nume then Cautare(arb^.st, x)
-      else  Cautare(arb^.dr, x);
+      if x < arb^.inf.nume then Cautare:= Cautare(arb^.st, x)
+      else  Cautare:= Cautare(arb^.dr, x);
 end;
 Procedure Modificare(var arb: Tree; x: string[24]);
 var aux: Tree; media: real;
